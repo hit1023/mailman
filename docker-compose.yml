@@ -4,7 +4,7 @@ services:
     container_name: mailman
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "8765:3000"
     environment:
       RESEND_API_KEY: ${RESEND_API_KEY}
       DEFAULT_FROM: ${DEFAULT_FROM:-noreply@yahoi.jp}

@@ -1,3 +1,4 @@
+import { serve } from '@hono/node-server'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { apiReference } from '@scalar/hono-api-reference'
 import { sendRoute } from './routes/send.js'
@@ -50,10 +51,8 @@ app.get(
   })
 )
 
-const port = process.env.PORT ?? 3000
-console.log(`Mailman API running on port ${port}`)
+const port = Number(process.env.PORT ?? 3000)
 
-export default {
-  port,
-  fetch: app.fetch,
-}
+serve({ fetch: app.fetch, port }, () => {
+  console.log(`Mailman API running on port ${port}`)
+})

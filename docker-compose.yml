@@ -1,0 +1,28 @@
+services:
+  mailserver:
+    image: boky/postfix
+    container_name: mailserver
+    hostname: mail.yahoi.jp
+    restart: unless-stopped
+    ports:
+      - "25:25"
+      - "587:587"
+    environment:
+      HOSTNAME: mail.yahoi.jp
+      DOMAIN: yahoi.jp
+      ALLOWED_SENDER_DOMAINS: yahoi.jp
+      DKIM_AUTOGENERATE: "true"
+      POSTFIX_message_size_limit: "26214400"
+      # 送信のみ（受信拒否）
+      POSTFIX_inet_interfaces: all
+      POSTFIX_smtp_tls_security_level: may
+      POSTFIX_smtp_tls_note_starttls_offer: "yes"
+    volumes:
+      - ./data/opendkim/keys:/etc/opendkim/keys
+      - ./data/postfix/spool:/var/spool/postfix
+    networks:
+      - mailnet
+
+networks:
+  mailnet:
+    driver: bridge

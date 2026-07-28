@@ -48,6 +48,10 @@ h1 {
 
 p.desc { color: var(--text-dim); font-size: 0.92rem; margin: 0 0 28px; }
 
+h2 { font-size: 1.05rem; font-weight: 600; margin: 0 0 4px; color: var(--text); }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
 a { color: var(--accent); }
 
 nav.tabs {

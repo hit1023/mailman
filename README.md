@@ -12,7 +12,7 @@ Hono + OpenAPI で構築され、Docker で動作する。
 - [環境変数](#環境変数)
 - [ローカル開発](#ローカル開発)
 - [Dockerでの起動](#dockerでの起動)
-- [本番デプロイ (h-1)](#本番デプロイ-h-1)
+- [本番デプロイ例](#本番デプロイ例)
 - [API仕様](#api仕様)
 - [環境設定WebUI (`/settings`)](#環境設定webui-settings)
 - [テスト送信ページ (`/test`)](#テスト送信ページ-test)
@@ -134,15 +134,16 @@ docker compose up -d
 ./run.sh
 ```
 
-## 本番デプロイ (h-1)
+## 本番デプロイ例
 
-現在の本番運用は h-1（192.168.0.20）上のDockerコンテナ。
+社内LANのDockerホスト上でコンテナとして常設運用し、リバースプロキシ（nginx-proxy-manager等）で
+独自ドメインにHTTPS公開するのが基本構成。
 
-- コンテナ直: `http://192.168.0.20:8765`
-- 外部公開URL: `https://mailman.s-quad.com`（gate上のnginx-proxy-managerが`*.s-quad.com`
-  ワイルドカード証明書でHTTPS終端し、`192.168.0.20:8765`へリバースプロキシしている）
+- コンテナ直: `http://<デプロイ先ホスト>:8765`
+- 外部公開URL例: `https://mailman.example.com`（ワイルドカード証明書でHTTPS終端し、
+  デプロイ先ホストの8765番へリバースプロキシ）
 
-デプロイ手順（h-1上）:
+デプロイ手順（デプロイ先ホスト上）:
 
 ```bash
 cd ~/docker/mailman
@@ -163,7 +164,7 @@ docker compose up -d --build
   "subject": "お知らせ",
   "html": "<p>本文</p>",
   "text": "本文",
-  "from": "noreply@s-quad.com"
+  "from": "noreply@example.com"
 }
 ```
 
@@ -194,7 +195,7 @@ Resend APIキーが無効、宛先ドメインが不正、送信元ドメイン�
 curlでの実行例:
 
 ```bash
-curl -X POST https://mailman.s-quad.com/send \
+curl -X POST https://mailman.example.com/send \
   -H "Content-Type: application/json" \
   -d '{
     "to": "you@example.com",
@@ -286,6 +287,6 @@ curl -s https://api.resend.com/domains -H "Authorization: Bearer $RESEND_API_KEY
 **`/settings`にアクセスすると500が返る**
 → `ADMIN_PASSWORD`が`.env`に設定されていない。設定して再起動する。
 
-**h-1へのデプロイがうまくいかない**
+**デプロイ先ホストへのデプロイがうまくいかない**
 → `~/docker/mailman`で`git status`を確認し、ローカルの未コミット変更（特に`.env`は
 `.gitignore`対象なのでpullでは消えない）がpullを妨げていないか確認する。

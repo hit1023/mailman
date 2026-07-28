@@ -6,10 +6,16 @@ import { sendRoute } from './routes/send.js'
 import { healthRoute } from './routes/health.js'
 import { readEnvFile, writeEnvFile } from './lib/envFile.js'
 import { SETTINGS_FIELDS, renderSettingsPage } from './routes/settingsPage.js'
+import { renderHomePage } from './routes/homePage.js'
+import { renderDocsPage } from './routes/docsPage.js'
 
 const app = new OpenAPIHono()
 
 // Routes
+app.get('/', (c) => {
+  return c.html(renderHomePage())
+})
+
 app.openapi(healthRoute, (c) => {
   return c.json({ status: 'ok' })
 })
@@ -68,9 +74,13 @@ app.doc('/openapi.json', {
   },
 })
 
-// /docs UI
+// /docs UI（タブナビ付きページの中にiframeで埋め込む）
+app.get('/docs', (c) => {
+  return c.html(renderDocsPage())
+})
+
 app.get(
-  '/docs',
+  '/api-docs',
   apiReference({
     spec: { url: '/openapi.json' },
     theme: 'saturn',

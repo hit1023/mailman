@@ -1,3 +1,5 @@
+import { renderNav, NAV_STYLE } from '../lib/nav.js'
+
 export const SETTINGS_FIELDS = [
   { key: 'RESEND_API_KEY', label: 'Resend APIキー', type: 'password' },
   { key: 'DEFAULT_FROM', label: 'デフォルト送信元アドレス', type: 'text' },
@@ -37,9 +39,11 @@ export function renderSettingsPage(values, saved) {
   button { padding: 8px 20px; font-size: 0.95rem; border: none; border-radius: 4px; background: #2563eb; color: #fff; cursor: pointer; }
   .notice { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; }
   .warning { background: #fffbeb; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; font-size: 0.85rem; }
+  ${NAV_STYLE}
 </style>
 </head>
 <body>
+  ${renderNav('/settings')}
   <h1>Mailman 環境設定</h1>
   ${saved ? '<div class="notice">保存しました。反映するには docker compose restart（またはrun.shの再起動）が必要です。</div>' : ''}
   <div class="warning">変更は .env に書き込まれるだけで、コンテナは自動再起動しません。</div>

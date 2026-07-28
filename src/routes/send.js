@@ -11,7 +11,10 @@ const SendBodySchema = z.object({
     .string()
     .email()
     .optional()
-    .openapi({ example: 'noreply@yahoi.jp', description: '省略時はDEFAULT_FROMを使用' }),
+    .openapi({
+      example: process.env.DEFAULT_FROM ?? 'noreply@yahoi.jp',
+      description: '省略時はDEFAULT_FROMを使用',
+    }),
 })
 
 const SendResponseSchema = z.object({

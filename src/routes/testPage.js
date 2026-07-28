@@ -31,7 +31,7 @@ export function renderTestPage() {
     <label><span>宛先</span><input type="email" name="to" placeholder="you@example.com" required></label>
     <label><span>件名</span><input name="subject" value="テストメール" required></label>
     <label><span>本文</span><textarea name="text">Mailmanからのテスト送信です。</textarea></label>
-    <label><span>送信元（任意・省略時はDEFAULT_FROM）</span><input type="email" name="from" placeholder="noreply@yahoi.jp"></label>
+    <label><span>送信元（任意・省略時はDEFAULT_FROM）</span><input type="email" name="from" placeholder="${process.env.DEFAULT_FROM ?? 'noreply@yahoi.jp'}"></label>
     <button type="submit">テスト送信</button>
   </form>
   <div id="sendResult"></div>

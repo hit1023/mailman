@@ -1,4 +1,5 @@
-import { renderNav, NAV_STYLE } from '../lib/nav.js'
+import { renderNav } from '../lib/nav.js'
+import { PAGE_STYLE } from '../lib/theme.js'
 
 export function renderDocsPage() {
   return `<!doctype html>
@@ -6,13 +7,9 @@ export function renderDocsPage() {
 <head>
 <meta charset="utf-8">
 <title>Mailman APIドキュメント</title>
-<style>
-  body { font-family: -apple-system, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; background: #fff; }
-  iframe { width: 100%; height: 80vh; border: 1px solid #ddd; border-radius: 4px; }
-  ${NAV_STYLE}
-</style>
+<style>${PAGE_STYLE}</style>
 </head>
-<body>
+<body class="wide">
   ${renderNav('/docs')}
   <iframe src="/api-docs" title="API Docs"></iframe>
 </body>

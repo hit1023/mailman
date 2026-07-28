@@ -1,4 +1,5 @@
-import { renderNav, NAV_STYLE } from '../lib/nav.js'
+import { renderNav } from '../lib/nav.js'
+import { PAGE_STYLE } from '../lib/theme.js'
 
 export function renderTestPage() {
   return `<!doctype html>
@@ -6,21 +7,7 @@ export function renderTestPage() {
 <head>
 <meta charset="utf-8">
 <title>Mailman テスト送信</title>
-<style>
-  body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; background: #fff; }
-  h1 { font-size: 1.3rem; }
-  p.desc { color: #555; font-size: 0.9rem; }
-  label { display: block; margin-bottom: 16px; }
-  label span { display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px; }
-  input, textarea { width: 100%; box-sizing: border-box; padding: 8px; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #1a1a1a; font-family: inherit; }
-  textarea { resize: vertical; min-height: 100px; }
-  button { padding: 8px 20px; font-size: 0.95rem; border: none; border-radius: 4px; background: #2563eb; color: #fff; cursor: pointer; }
-  button:disabled { background: #9ca3af; cursor: not-allowed; }
-  #sendResult { font-size: 0.85rem; margin-top: 16px; white-space: pre-wrap; word-break: break-all; }
-  .ok { color: #065f46; }
-  .ng { color: #b91c1c; }
-  ${NAV_STYLE}
-</style>
+<style>${PAGE_STYLE}</style>
 </head>
 <body>
   ${renderNav('/test')}

@@ -1,4 +1,5 @@
-import { renderNav, NAV_STYLE } from '../lib/nav.js'
+import { renderNav } from '../lib/nav.js'
+import { PAGE_STYLE } from '../lib/theme.js'
 
 export function renderHomePage() {
   return `<!doctype html>
@@ -6,12 +7,7 @@ export function renderHomePage() {
 <head>
 <meta charset="utf-8">
 <title>Mailman</title>
-<style>
-  body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; background: #fff; }
-  h1 { font-size: 1.3rem; }
-  p.desc { color: #555; font-size: 0.9rem; }
-  ${NAV_STYLE}
-</style>
+<style>${PAGE_STYLE}</style>
 </head>
 <body>
   ${renderNav('/')}

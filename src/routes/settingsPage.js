@@ -1,4 +1,5 @@
-import { renderNav, NAV_STYLE } from '../lib/nav.js'
+import { renderNav } from '../lib/nav.js'
+import { PAGE_STYLE } from '../lib/theme.js'
 
 export const SETTINGS_FIELDS = [
   { key: 'RESEND_API_KEY', label: 'Resend APIキー', type: 'password' },
@@ -30,17 +31,7 @@ export function renderSettingsPage(values, saved) {
 <head>
 <meta charset="utf-8">
 <title>Mailman 設定</title>
-<style>
-  body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; background: #fff; }
-  h1 { font-size: 1.3rem; }
-  label { display: block; margin-bottom: 16px; }
-  label span { display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px; }
-  input { width: 100%; box-sizing: border-box; padding: 8px; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #1a1a1a; }
-  button { padding: 8px 20px; font-size: 0.95rem; border: none; border-radius: 4px; background: #2563eb; color: #fff; cursor: pointer; }
-  .notice { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; }
-  .warning { background: #fffbeb; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; font-size: 0.85rem; }
-  ${NAV_STYLE}
-</style>
+<style>${PAGE_STYLE}</style>
 </head>
 <body>
   ${renderNav('/settings')}

@@ -1,5 +1,6 @@
-import { renderNav } from '../lib/nav.js'
+import { renderNav, renderBrand } from '../lib/nav.js'
 import { PAGE_STYLE } from '../lib/theme.js'
+import { FAVICON_LINK } from '../lib/favicon.js'
 
 export const SETTINGS_FIELDS = [
   { key: 'RESEND_API_KEY', label: 'Resend APIキー', type: 'password' },
@@ -31,9 +32,11 @@ export function renderSettingsPage(values, saved) {
 <head>
 <meta charset="utf-8">
 <title>Mailman 設定</title>
+${FAVICON_LINK}
 <style>${PAGE_STYLE}</style>
 </head>
 <body>
+  ${renderBrand()}
   ${renderNav('/settings')}
   <h1>Mailman 環境設定</h1>
   ${saved ? '<div class="notice">保存しました。反映するには docker compose up -d（またはrun.shの「起動」）が必要です。docker compose restartでは反映されません。</div>' : ''}

@@ -1,5 +1,6 @@
-import { renderNav } from '../lib/nav.js'
+import { renderNav, renderBrand } from '../lib/nav.js'
 import { PAGE_STYLE } from '../lib/theme.js'
+import { FAVICON_LINK } from '../lib/favicon.js'
 
 export function renderTestPage() {
   return `<!doctype html>
@@ -7,9 +8,11 @@ export function renderTestPage() {
 <head>
 <meta charset="utf-8">
 <title>Mailman テスト送信</title>
+${FAVICON_LINK}
 <style>${PAGE_STYLE}</style>
 </head>
 <body>
+  ${renderBrand()}
   ${renderNav('/test')}
   <h1>Mailman テスト送信</h1>
   <p class="desc">入力した宛先へテストメールを送信します。</p>

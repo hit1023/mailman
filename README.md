@@ -1,3 +1,5 @@
+<img src="images/mascot.svg" width="96" height="96" alt="mailmanのマスコット">
+
 # mailman
 
 [Resend](https://resend.com) を使ったシンプルなメール送信 REST API。
@@ -8,6 +10,7 @@ Hono + OpenAPI で構築され、Docker で動作する。
 - [概要](#概要)
 - [設計方針](#設計方針)
 - [画面・エンドポイント一覧](#画面エンドポイント一覧)
+- [既知の制限](#既知の制限)
 - [ディレクトリ構成](#ディレクトリ構成)
 - [環境変数](#環境変数)
 - [ローカル開発](#ローカル開発)
@@ -59,6 +62,20 @@ Hono + OpenAPI で構築され、Docker で動作する。
 `/docs`が`/api-docs`をiframeで包んでいるのは、Scalar（サードパーティ製UIライブラリ）が
 ページ全体を専有してしまい、こちらの共通ナビゲーションを直接埋め込めないための回避策。
 
+## 既知の制限
+
+薄いラッパーに徹する設計方針（[設計方針](#設計方針)参照）により、意図的に持たせていない機能:
+
+- **添付ファイル非対応**: Resend自体は添付ファイル送信に対応しているが、`POST /send`の
+  スキーマには含めていない。必要になったら`src/routes/send.js`にフィールドを追加する
+- **CORSヘッダー未設定**: ブラウザから直接`fetch()`で叩く用途（`/test`ページ含む）は
+  同一オリジンのみ動作する。別ドメインのフロントエンドから直接呼びたい場合は
+  `hono/cors`ミドルウェアの追加が必要
+- **送信キュー・リトライなし**: Resend側が一時的にエラーを返した場合、呼び出し元で
+  リトライを実装する必要がある
+- **レート制限のハンドリングなし**: Resendの送信数上限（プランに依存）に達すると
+  `429`相当のエラーがそのまま返る。呼び出し側で送信頻度を制御すること
+
 ## ディレクトリ構成
 
 ```
@@ -73,7 +90,9 @@ mailman/
     ├── lib/
     │   ├── envFile.js          # .env ファイルの読み書き（/settings用）
     │   ├── nav.js               # タブナビゲーションのHTML生成
-    │   └── theme.js             # 全画面共通のダークテーマCSS
+    │   ├── theme.js             # 全画面共通のダークテーマCSS
+    │   ├── logo.js               # アイコン+ワードマークのロゴSVG生成
+    │   └── favicon.js            # favicon SVG（logo.jsのアイコン部分と同一デザイン）
     └── routes/
         ├── send.js              # POST /send のZodスキーマ・OpenAPIルート定義
         ├── health.js            # GET /health のルート定義
@@ -204,6 +223,17 @@ curl -X POST https://mailman.example.com/send \
   }'
 ```
 
+複数宛先・HTML/テキスト両方を指定する例:
+
+```json
+{
+  "to": ["a@example.com", "b@example.com"],
+  "subject": "お知らせ",
+  "html": "<p>HTML対応クライアント向け</p>",
+  "text": "非対応クライアント向けのプレーンテキスト"
+}
+```
+
 インタラクティブに試したい場合は`/docs`（Scalar UI）からリクエストを組み立てて実行できる。
 
 ### GET /health
@@ -290,3 +320,9 @@ curl -s https://api.resend.com/domains -H "Authorization: Bearer $RESEND_API_KEY
 **デプロイ先ホストへのデプロイがうまくいかない**
 → `~/docker/mailman`で`git status`を確認し、ローカルの未コミット変更（特に`.env`は
 `.gitignore`対象なのでpullでは消えない）がpullを妨げていないか確認する。
+
+**大量送信すると途中からエラーになる**
+→ Resendの送信数上限（プランごとの月間/日次上限）に達している可能性がある。
+`https://api.resend.com/domains`と同様に、Resendダッシュボードの使用量ページで確認できる。
+本APIはリトライやキューイングを持たないため（[既知の制限](#既知の制限)参照）、
+大量送信が必要な場合は呼び出し側でレート制御を行うこと。

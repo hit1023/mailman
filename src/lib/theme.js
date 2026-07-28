@@ -54,6 +54,15 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 a { color: var(--accent); }
 
+.brand {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 14px;
+}
+.brand svg { display: block; width: 120px; height: auto; }
+
+.logo-hero svg { display: block; width: 220px; height: auto; margin: 0 auto; }
+
 nav.tabs {
   display: flex;
   gap: 4px;
@@ -118,6 +127,27 @@ button:disabled { background: #333c4a; color: #6b7484; cursor: not-allowed; box-
 }
 .notice { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
 .warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning-text); }
+
+.hero { text-align: center; padding: 8px 0 36px; }
+.hero .logo-hero { margin-bottom: 16px; }
+.hero p.desc { margin: 0 0 12px; }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-dim); }
+.badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); }
+.badge.up .dot { background: var(--success-text); }
+.badge.down .dot { background: var(--danger-text); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 28px 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.card h3 { margin: 0 0 8px; font-size: 1rem; color: var(--text); }
+.card p { margin: 0; font-size: 0.85rem; color: var(--text-dim); }
+
+h2.section { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim); margin: 32px 0 12px; font-weight: 600; }
+
+.linklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.linklist a { display: block; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; font-size: 0.92rem; transition: border-color .15s, background .15s; }
+.linklist a:hover { border-color: var(--accent); background: var(--surface); }
+.linklist span { display: block; font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
 
 #subscribeStatus, #sendResult {
   font-size: 0.85rem;

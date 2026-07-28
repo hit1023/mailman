@@ -9,12 +9,17 @@ import { SETTINGS_FIELDS, renderSettingsPage } from './routes/settingsPage.js'
 import { renderHomePage } from './routes/homePage.js'
 import { renderDocsPage } from './routes/docsPage.js'
 import { renderTestPage } from './routes/testPage.js'
+import { FAVICON_SVG } from './lib/favicon.js'
 
 const app = new OpenAPIHono()
 
 // Routes
 app.get('/', (c) => {
   return c.html(renderHomePage())
+})
+
+app.get('/favicon.svg', (c) => {
+  return c.text(FAVICON_SVG, 200, { 'Content-Type': 'image/svg+xml' })
 })
 
 app.openapi(healthRoute, (c) => {

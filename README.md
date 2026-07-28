@@ -7,13 +7,14 @@ Hono + OpenAPI で構築され、Docker で動作する。
 
 - `GET /` — ホーム（タブナビゲーション）
 - `POST /send` — メール送信（HTML / テキスト対応、複数宛先可）
+- `GET /test` — フォームからテストメールを送信できるページ
 - `GET /settings` — 環境設定WebUI（Basic認証必須）
 - `GET /health` — ヘルスチェック
 - `GET /docs` — API ドキュメント（タブ内にScalar UIをiframe埋め込み）
 - `GET /api-docs` — Scalar による API ドキュメント UI 本体
 - `GET /openapi.json` — OpenAPI 3.0 スペック
 
-`/`, `/docs`, `/settings` は上部にタブナビゲーションがあり、直接URLを打たずに行き来できる。
+`/`, `/docs`, `/test`, `/settings` は上部にタブナビゲーションがあり、直接URLを打たずに行き来できる。
 
 ## 構成
 

@@ -1,6 +1,7 @@
 export const NAV_ITEMS = [
   { path: '/', label: 'ホーム' },
   { path: '/docs', label: 'APIドキュメント' },
+  { path: '/test', label: 'テスト送信' },
   { path: '/settings', label: '設定' },
 ]
 

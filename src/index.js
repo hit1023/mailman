@@ -8,6 +8,7 @@ import { readEnvFile, writeEnvFile } from './lib/envFile.js'
 import { SETTINGS_FIELDS, renderSettingsPage } from './routes/settingsPage.js'
 import { renderHomePage } from './routes/homePage.js'
 import { renderDocsPage } from './routes/docsPage.js'
+import { renderTestPage } from './routes/testPage.js'
 
 const app = new OpenAPIHono()
 
@@ -39,6 +40,11 @@ app.openapi(sendRoute, async (c) => {
   }
 
   return c.json({ id: data.id }, 200)
+})
+
+// テスト送信ページ（フォームからそのまま/sendを叩く）
+app.get('/test', (c) => {
+  return c.html(renderTestPage())
 })
 
 // 設定ページ（.envの閲覧・編集。RESEND_API_KEY等の機微情報を扱うためBasic認証必須）

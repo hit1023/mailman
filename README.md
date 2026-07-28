@@ -225,12 +225,17 @@ curl -X POST https://mailman.s-quad.com/send \
    に新しい値が書き込まれる
 2. **しかしNode.jsプロセスの`process.env`はプロセス起動時に一度読み込まれるだけなので、
    ファイルを書き換えても実行中のプロセスには反映されない**
-3. 反映するには明示的にコンテナを再起動する必要がある:
+3. 反映するには明示的にコンテナを再作成する必要がある:
 
 ```bash
-docker compose restart
-# または run.sh の「1. 更新 & 再起動」「2. 起動」相当の操作
+docker compose up -d
+# または run.sh の「2. 起動」
 ```
+
+**`docker compose restart`ではダメ。** Composeの`environment:`にある`${RESEND_API_KEY}`等の
+変数展開は`up`実行時にしか評価されないため、`restart`は起動済みコンテナに焼き込まれた古い環境変数の
+ままプロセスを再起動するだけになる（pushmanでLINE連携のトークンを設定した際、実際にこの誤りで
+反映されず原因調査することになった）。`.env`を変更したときは必ず`up -d`を使うこと。
 
 4. 再起動後は、送信処理本体・`/test`ページの送信元プレースホルダー・`/docs`のAPIサンプル値の
    すべてが新しい`.env`の値（`process.env`経由）を参照するようになる
@@ -265,7 +270,8 @@ curl -s https://api.resend.com/domains -H "Authorization: Bearer $RESEND_API_KEY
 ## トラブルシューティング
 
 **`/settings`で保存したのに反映されない**
-→ 上述の通り、保存は`.env`ファイルへの書き込みのみ。`docker compose restart`を実行したか確認する。
+→ 上述の通り、保存は`.env`ファイルへの書き込みのみ。`docker compose up -d`を実行したか確認する
+（`docker compose restart`では反映されない）。
 
 **`/test`や`/docs`のプレースホルダー・サンプルが古い値のまま**
 → これも同上。再起動すればコード側は`process.env.DEFAULT_FROM`を都度読み直すので、

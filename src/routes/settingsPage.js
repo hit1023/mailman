@@ -36,8 +36,8 @@ export function renderSettingsPage(values, saved) {
 <body>
   ${renderNav('/settings')}
   <h1>Mailman 環境設定</h1>
-  ${saved ? '<div class="notice">保存しました。反映するには docker compose restart（またはrun.shの再起動）が必要です。</div>' : ''}
-  <div class="warning">変更は .env に書き込まれるだけで、コンテナは自動再起動しません。</div>
+  ${saved ? '<div class="notice">保存しました。反映するには docker compose up -d（またはrun.shの「起動」）が必要です。docker compose restartでは反映されません。</div>' : ''}
+  <div class="warning">変更は .env に書き込まれるだけで、コンテナは自動再作成されません。</div>
   <form method="POST" action="/settings">
     ${fields}
     <button type="submit">保存</button>
